@@ -37,7 +37,19 @@ function Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
 		crosshair_unit:brain():Set_Carray_Data(carry_id)
 		DelayedCalls:Add("DelayedModDeleteUnit" .. carry_id, 0.5, function()
 			if carry_unit then
-				carry_unit:set_slot(0)
+				local carry_data = tweak_data.carry[carry_id] or nil
+				if carry_data then
+					carry_unit:set_slot(0)
+					for i = 1, 4 do
+						local character_name = managers.criminals:character_name_by_panel_id(i)
+						local _unit_by_name = managers.criminals:character_unit_by_name(character_name)
+						if _unit_by_name and _unit_by_name == crosshair_unit then
+							local name = managers.localization:text("menu_" .. character_name) .. "[".. carry_id .."]"
+							managers.hud:set_teammate_name(i, name)
+							break
+						end
+					end
+				end
 			end
 		end)
 		return nil
