@@ -2,15 +2,28 @@ if Network:is_client() then
 	return
 end
 
+function TeamAIBrain:Get_Carray_Data()
+	return self._current_logic or nil
+end
+
+local _f_TeamAIBrain_set_logic = TeamAIBrain.set_logic
+
+function TeamAIBrain:set_logic(name, ...)
+	_f_TeamAIBrain_set_logic(self, name, ...)
+	if self._current_logic_name == "disabled" and self:Get_Carray_Data() then
+		self:Drop_Carray()
+	end
+end
+
 function TeamAIBrain:Set_Carray_Data(carry_data)
 	self._carry_data = carry_data or nil
 end
 
-function TeamAIBrain:Get_Carray_Data(carry_data)
+function TeamAIBrain:Get_Carray_Data()
 	return self._carry_data or nil
 end
 
-function TeamAIBrain:Drop_Carray(carry_data)
+function TeamAIBrain:Drop_Carray()
 	if self._carry_data and self._carry_data ~= "" then
 		local carry_data = tweak_data.carry[self._carry_data]
 		if carry_data then
