@@ -26,7 +26,8 @@ function PlayerManager:server_drop_carry(carry_id, ...)
 	}
 	if _crosshair_unit and alive(_crosshair_unit) and 
 		_Attach_ID[_crosshair_unit:name():key()] and 
-		_crosshair_distance <= 500 then
+		_crosshair_distance <= 500 and
+		mvector3.distance(managers.player:player_unit():position(), _crosshair_unit:position()) <= 500 then
 		_carry_unit = Try_Send_Carry_To_There(_crosshair_unit, _carry_unit, carry_id)
 	end
 	return _carry_unit
