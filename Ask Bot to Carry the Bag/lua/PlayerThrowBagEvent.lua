@@ -40,7 +40,6 @@ function Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
 			if carry_unit then
 				local carry_data = tweak_data.carry[carry_id] or nil
 				if carry_data then
-					crosshair_unit:character_damage():set_pickup(carry_id)
 					carry_unit:set_slot(0)
 					crosshair_unit:brain():Set_Carray_Data(carry_id)
 					for i = 1, 4 do
