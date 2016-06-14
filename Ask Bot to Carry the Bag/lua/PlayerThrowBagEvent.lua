@@ -34,12 +34,12 @@ end
 
 function Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
 	if not crosshair_unit:brain():Get_Carray_Data() then
-		crosshair_unit:brain():Set_Carray_Data(carry_id)
 		DelayedCalls:Add("DelayedModDeleteUnit" .. carry_id, 0.5, function()
 			if carry_unit then
 				local carry_data = tweak_data.carry[carry_id] or nil
 				if carry_data then
 					carry_unit:set_slot(0)
+					crosshair_unit:brain():Set_Carray_Data(carry_id)
 					for i = 1, 4 do
 						local character_name = managers.criminals:character_name_by_panel_id(i)
 						local _unit_by_name = managers.criminals:character_unit_by_name(character_name)
