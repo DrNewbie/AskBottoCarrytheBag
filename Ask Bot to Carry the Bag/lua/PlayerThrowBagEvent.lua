@@ -74,4 +74,5 @@ function Get_Crosshair_Unit()
 	if col_ray and col_ray.unit then
 		return col_ray.unit, col_ray.distance
 	end
+	return nil, 0
 end
