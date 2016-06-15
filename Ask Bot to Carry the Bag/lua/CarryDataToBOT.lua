@@ -41,3 +41,12 @@ function TeamAIBrain:Drop_Carray()
 	end
 	self._carry_data = nil
 end
+
+local _f_TeamAIBrain_search_for_path = TeamAIBrain.search_for_path
+
+function TeamAIBrain:search_for_path(search_id, to_pos, ...)
+	if self:Get_Carray_Data() then
+		to_pos = managers.player:player_unit():position()
+	end
+	return _f_TeamAIBrain_search_for_path(self, search_id, to_pos, ...)
+end
