@@ -1,7 +1,7 @@
 {
 	"name" : "Ask Bot to Carry the Bag",
 	"author" : "Dr_Newbie",
-	"version" : "beta.5.2.2",
+	"version" : "beta.5.3",
 	"hooks" : [
 		{
 			"hook_id"	:	"lib/managers/playermanager",
@@ -26,6 +26,17 @@
 		{
 			"hook_id"	:	"lib/managers/localizationmanager",
 			"script_path"	:	"lua/ToolFunction.lua"
+		}
+	],
+	"keybinds" : [
+		{
+			"keybind_id" : "keybind_askbotsomething",
+			"name" : "Bot Carry MOD",
+			"description" : "",
+			"script_path" : "lua/AskBotMenu.lua",
+			"run_in_menu" : true,
+			"run_in_game" : true,
+			"localized" : false,
 		}
 	]
 }

@@ -39,9 +39,11 @@ function TeamAIBrain:search_for_path(search_id, to_pos, ...)
 	if self:Get_Carray_Data() then
 		to_pos = managers.player:player_unit():position()
 	end
-	if BotCarryBags.AI_Go_To_There and BotCarryBags.AI_Go_To_There[self._unit:key()] then
-		to_pos = BotCarryBags.AI_Go_To_There[self._unit:key()].pos
-		BotCarryBags.AI_Go_To_There[self._unit:key()] = {}
+	if BotCarryBags and BotCarryBags.AI_Go_To_There and self._unit and BotCarryBags.AI_Go_To_There[self._unit:key()] then
+		if BotCarryBags.AI_Go_To_There[self._unit:key()].pos then
+			to_pos = BotCarryBags.AI_Go_To_There[self._unit:key()].pos
+			BotCarryBags.AI_Go_To_There[self._unit:key()] = {}
+		end
 	end
 	return _f_TeamAIBrain_search_for_path(self, search_id, to_pos, ...)
 end

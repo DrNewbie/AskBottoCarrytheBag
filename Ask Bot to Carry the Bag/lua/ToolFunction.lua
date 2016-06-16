@@ -36,3 +36,9 @@ function BotCarryBags:Get_All_Bag_Unit()
 	end  
 	return _unit
 end
+
+function BotCarryBags:Menu_Dofile(data)
+	if data and data.item then
+		dofile(BotCarryBags.LogicPath .. "" .. data.item)
+	end
+end
