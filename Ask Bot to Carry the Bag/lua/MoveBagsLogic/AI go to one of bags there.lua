@@ -20,10 +20,7 @@ function Running()
 			local _pos = _bag:position()
 			for _, _ai_unit in pairs(_AIs) do
 				if _ai_unit and alive(_ai_unit) then
-					BotCarryBags.AI_Go_To_There[_ai_unit:key()] = {
-						pos = _pos
-					}
-					TeamAILogicBase._exit(_ai_unit, "travel")
+					BotCarryBags:Ask_AI_Go_To_There(_ai_unit, _pos)
 				end
 			end
 		end
