@@ -2,6 +2,12 @@ if Network:is_client() then
 	return
 end
 
+_G.BotCarryBags = _G.BotCarryBags or {}
+
+if not BotCarryBags then
+	return
+end
+
 local _f_TeamAIBrain_set_logic = TeamAIBrain.set_logic
 
 function TeamAIBrain:set_logic(name, ...)
@@ -32,6 +38,10 @@ local _f_TeamAIBrain_search_for_path = TeamAIBrain.search_for_path
 function TeamAIBrain:search_for_path(search_id, to_pos, ...)
 	if self:Get_Carray_Data() then
 		to_pos = managers.player:player_unit():position()
+	end
+	if BotCarryBags.AI_Go_To_There and BotCarryBags.AI_Go_To_There[self._unit:key()] then
+		to_pos = BotCarryBags.AI_Go_To_There[self._unit:key()].pos
+		BotCarryBags.AI_Go_To_There[self._unit:key()] = {}
 	end
 	return _f_TeamAIBrain_search_for_path(self, search_id, to_pos, ...)
 end
