@@ -18,6 +18,9 @@ function TeamAIBrain:set_logic(name, ...)
 end
 
 function TeamAIBrain:Set_Carray_Data(carry_unit)
+	if self:Get_Carray_Data() then
+		self:Drop_Carray()
+	end
 	self._carry_unit = carry_unit or nil
 	carry_unit:carry_data():link_to(self._unit)
 end
@@ -33,17 +36,29 @@ function TeamAIBrain:Drop_Carray()
 	self._carry_unit = nil
 end
 
+function path_change(them, to_pos)
+	if them:Get_Carray_Data() then
+		to_pos = managers.player:player_unit():position()
+	end
+	if BotCarryBags and BotCarryBags.AI_Go_To_There and them._unit and BotCarryBags.AI_Go_To_There[them._unit:key()] then
+		if BotCarryBags.AI_Go_To_There[them._unit:key()].pos then
+			to_pos = BotCarryBags.AI_Go_To_There[them._unit:key()].pos
+			BotCarryBags.AI_Go_To_There[them._unit:key()] = {}
+		end
+	end
+	return to_pos
+end
+
 local _f_TeamAIBrain_search_for_path = TeamAIBrain.search_for_path
 
 function TeamAIBrain:search_for_path(search_id, to_pos, ...)
-	if self:Get_Carray_Data() then
-		to_pos = managers.player:player_unit():position()
-	end
-	if BotCarryBags and BotCarryBags.AI_Go_To_There and self._unit and BotCarryBags.AI_Go_To_There[self._unit:key()] then
-		if BotCarryBags.AI_Go_To_There[self._unit:key()].pos then
-			to_pos = BotCarryBags.AI_Go_To_There[self._unit:key()].pos
-			BotCarryBags.AI_Go_To_There[self._unit:key()] = {}
-		end
-	end
+	to_pos = path_change(self, to_pos)
 	return _f_TeamAIBrain_search_for_path(self, search_id, to_pos, ...)
+end
+
+local _f_TeamAIBrain_search_for_path_from_pos = TeamAIBrain.search_for_path_from_pos
+
+function TeamAIBrain:search_for_path_from_pos(search_id, from_pos, to_pos, ...)
+	to_pos = path_change(self, to_pos)
+	return _f_TeamAIBrain_search_for_path_from_pos(self, search_id, from_pos, to_pos, ...)
 end

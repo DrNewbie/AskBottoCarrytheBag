@@ -14,11 +14,12 @@ if BotCarryBags.Only_One_Run and BotCarryBags.Only_One_Run == 1 then
 	return
 end
 
+local _My_Pos = managers.player:player_unit():position() - Vector3(50, 50, 0)
+
 function Running()
 	if not BotCarryBags or not managers.player or not managers.player:player_unit() then
 		return
 	end
-	local _My_Pos = managers.player:player_unit():position() - Vector3(50, 50, 0)
 	local _AIs = BotCarryBags:Get_All_AI_Unit()
 	local _Bags = BotCarryBags:Get_All_Bag_Unit()
 	local _bag = nil
@@ -72,6 +73,7 @@ function Running()
 			Running()
 		end)
 	else
+		_My_Pos = nil
 		BotCarryBags.Only_One_Run = 0
 		DelayedCalls:Remove("DelayedModMoveBagsLoop")
 	end
