@@ -7,7 +7,7 @@ function BotCarryBags:Ask_AI_Go_To_There(unit, pos)
 	BotCarryBags.AI_Go_To_There[unit:name():key()] = {
 		pos = pos
 	}
-	unit:brain():on_long_dis_interacted(0, managers.player:player_unit())
+	unit:brain():on_long_dis_interacted(5, managers.player:player_unit())
 end
 
 function BotCarryBags:Is_Ask_AI_Go_To_There(unit)
