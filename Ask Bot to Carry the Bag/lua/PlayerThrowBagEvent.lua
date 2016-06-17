@@ -27,7 +27,6 @@ function Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
 				crosshair_unit:brain():Set_Carray_Data(carry_unit)
 			end
 		end)
-		return nil
 	end
 	return carry_unit
 end

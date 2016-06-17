@@ -1,7 +1,7 @@
 {
 	"name" : "Ask Bot to Carry the Bag",
 	"author" : "Dr_Newbie",
-	"version" : "beta.5.5",
+	"version" : "beta.5.5.1",
 	"hooks" : [
 		{
 			"hook_id"	:	"lib/managers/playermanager",
