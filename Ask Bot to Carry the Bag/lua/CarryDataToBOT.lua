@@ -40,10 +40,11 @@ function path_change(them, to_pos)
 	if them:Get_Carray_Data() then
 		to_pos = managers.player:player_unit():position()
 	end
-	if BotCarryBags and BotCarryBags.AI_Go_To_There and them._unit and BotCarryBags.AI_Go_To_There[them._unit:key()] then
-		if BotCarryBags.AI_Go_To_There[them._unit:key()].pos then
-			to_pos = BotCarryBags.AI_Go_To_There[them._unit:key()].pos
-			BotCarryBags.AI_Go_To_There[them._unit:key()] = {}
+	local _id = them._unit:name():key()
+	if BotCarryBags and BotCarryBags.AI_Go_To_There and them._unit and BotCarryBags.AI_Go_To_There[_id] then
+		if BotCarryBags.AI_Go_To_There[_id].pos then
+			to_pos = BotCarryBags.AI_Go_To_There[_id].pos
+			BotCarryBags.AI_Go_To_There[_id] = {}
 		end
 	end
 	return to_pos

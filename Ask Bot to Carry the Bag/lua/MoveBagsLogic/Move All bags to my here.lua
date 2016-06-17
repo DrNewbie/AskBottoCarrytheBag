@@ -14,6 +14,8 @@ if BotCarryBags.Only_One_Run and BotCarryBags.Only_One_Run == 1 then
 	return
 end
 
+local _End_Time = math.floor(TimerManager:game():time()) + 15
+
 function Running()
 	if not BotCarryBags or not managers.player or not managers.player:player_unit() then
 		return
@@ -38,7 +40,7 @@ function Running()
 					if not BotCarryBags:Is_Ask_AI_Go_To_There(_ai_unit) then
 						if _ai_unit:brain():Get_Carray_Data() then
 							if mvector3.distance(_ai_unit:position(), _My_Pos) <= 200 then							
-								DelayedCalls:Add("DelayedModMoveBagsLoop_Drop_" .. tostring(_ai_unit:key()), 1, function()
+								DelayedCalls:Add("DelayedModMoveBagsLoop_Drop_" .. tostring(_ai_unit:key()), 0.2, function()
 									_ai_unit:brain():Drop_Carray()
 								end)
 							else
@@ -69,13 +71,17 @@ function Running()
 	end
 	if _Run > 0 then
 		DelayedCalls:Add("DelayedModMoveBagsLoop", 0.5, function()
-			Running()
+			if BotCarryBags.Forced_End == 0 and _End_Time > math.floor(TimerManager:game():time()) then
+				Running()
+			end
 		end)
 	else
+		_My_Pos = nil
 		BotCarryBags.Only_One_Run = 0
 		DelayedCalls:Remove("DelayedModMoveBagsLoop")
 	end
 end
 
+BotCarryBags.Forced_End = 0
 BotCarryBags.Only_One_Run = 1
 Running()

@@ -4,10 +4,10 @@ function BotCarryBags:Ask_AI_Go_To_There(unit, pos)
 	if not BotCarryBags.AI_Go_To_There then
 		BotCarryBags.AI_Go_To_There = {}
 	end
-	BotCarryBags.AI_Go_To_There[unit:key()] = {
+	BotCarryBags.AI_Go_To_There[unit:name():key()] = {
 		pos = pos
 	}
-	TeamAILogicBase._exit(unit, "travel")
+	unit:brain():on_long_dis_interacted(0, managers.player:player_unit())
 end
 
 function BotCarryBags:Is_Ask_AI_Go_To_There(unit)

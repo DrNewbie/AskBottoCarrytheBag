@@ -28,6 +28,8 @@ local _dialog_data = {
 
 BotCarryBags.Only_One_Run = 0
 
+BotCarryBags.Forced_End = 1
+
 DelayedCalls:Remove("DelayedModMoveBagsLoop")
 
 menu_options = {}
