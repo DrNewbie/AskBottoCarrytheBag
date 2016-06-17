@@ -1,10 +1,24 @@
 _G.BotCarryBags = _G.BotCarryBags or {}
 
 function BotCarryBags:Ask_AI_Go_To_There(unit, pos)
+	if not BotCarryBags.AI_Go_To_There then
+		BotCarryBags.AI_Go_To_There = {}
+	end
 	BotCarryBags.AI_Go_To_There[unit:key()] = {
 		pos = pos
 	}
 	TeamAILogicBase._exit(unit, "travel")
+end
+
+function BotCarryBags:Is_Ask_AI_Go_To_There(unit)
+	if not BotCarryBags.AI_Go_To_There then
+		return false
+	else
+		if BotCarryBags.AI_Go_To_There[unit:key()] and BotCarryBags.AI_Go_To_There[unit:key()].pos then
+			return true
+		end
+	end
+	return false
 end
 
 function BotCarryBags:Get_All_AI_Unit()

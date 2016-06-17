@@ -26,6 +26,10 @@ local _dialog_data = {
 	id = tostring(math.random(0,0xFFFFFFFF))
 }
 
+BotCarryBags.Only_One_Run = 0
+
+DelayedCalls:Remove("DelayedModMoveBagsLoop")
+
 menu_options = {}
 
 managers.system_menu:show(_dialog_data)
