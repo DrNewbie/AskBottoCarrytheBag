@@ -41,11 +41,9 @@ function path_change(them, to_pos)
 		to_pos = managers.player:player_unit():position()
 	end
 	local _id = them._unit:name():key()
-	if BotCarryBags and BotCarryBags.AI_Go_To_There and them._unit and BotCarryBags.AI_Go_To_There[_id] then
-		if BotCarryBags.AI_Go_To_There[_id].pos then
-			to_pos = BotCarryBags.AI_Go_To_There[_id].pos
-			BotCarryBags.AI_Go_To_There[_id] = {}
-		end
+	if BotCarryBags.AI_Go_To_There[_id] and BotCarryBags.AI_Go_To_There[_id].pos then
+		to_pos = BotCarryBags.AI_Go_To_There[_id].pos
+		BotCarryBags.AI_Go_To_There[_id] = {}
 	end
 	return to_pos
 end
