@@ -35,6 +35,8 @@ function BotCarryBags:Save()
 	end
 end
 
+otCarryBags:Load()
+
 Hooks:Add("LocalizationManagerPostInit", "BotCarryBags_loc", function(loc)
 	LocalizationManager:add_localized_strings({
 		["BotCarryBags_menu_title"] = "Bot Carry Bags",
