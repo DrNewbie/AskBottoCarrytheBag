@@ -35,7 +35,7 @@ function BotCarryBags:Save()
 	end
 end
 
-otCarryBags:Load()
+BotCarryBags:Load()
 
 Hooks:Add("LocalizationManagerPostInit", "BotCarryBags_loc", function(loc)
 	LocalizationManager:add_localized_strings({
