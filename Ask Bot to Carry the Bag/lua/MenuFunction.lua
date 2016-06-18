@@ -8,10 +8,39 @@ BotCarryBags.settings = BotCarryBags.settings or {}
 BotCarryBags.LogicPath = "mods/Ask Bot to Carry the Bag/lua/MoveBagsLogic/"
 BotCarryBags.LogicMenu = {}
 
+function BotCarryBags:Reset()
+	self.settings = {
+		shout_to_come_here = 1,
+	}
+	self:Save()
+end
+
+function BotCarryBags:Load()
+	local file = io.open(self.SaveFile, "r")
+	if file then
+		for key, value in pairs(json.decode(file:read("*all"))) do
+			self.settings[key] = value
+		end
+		file:close()
+	else
+		self:Reset()
+	end
+end
+
+function BotCarryBags:Save()
+	local file = io.open(self.SaveFile, "w+")
+	if file then
+		file:write(json.encode(self.settings))
+		file:close()
+	end
+end
+
 Hooks:Add("LocalizationManagerPostInit", "BotCarryBags_loc", function(loc)
 	LocalizationManager:add_localized_strings({
 		["BotCarryBags_menu_title"] = "Bot Carry Bags",
 		["BotCarryBags_menu_desc"] = "",
+		["BotCarryBags_menu_shout_to_come_here_title"] = "Shout to Come Here",
+		["BotCarryBags_menu_shout_to_come_here_desc"] = "Bot will go to your there when you shout to him and he has the bag.",
 	})
 end)
 
@@ -26,6 +55,23 @@ Hooks:Add("MenuManagerSetupCustomMenus", "BotCarryBagsOptions", function( menu_m
 end)
 
 Hooks:Add("MenuManagerPopulateCustomMenus", "BotCarryBagsOptions", function( menu_manager, nodes )
+	MenuCallbackHandler.BotCarryBags_shout_to_come_here_toggle_callback = function(self, item)
+		if tostring(item:value()) == "on" then
+			BotCarryBags.settings.shout_to_come_here = 1
+		else
+			BotCarryBags.settings.shout_to_come_here = 0
+		end
+		BotCarryBags:Save()
+	end
+	local _bool = BotCarryBags.settings.shout_to_come_here == 1 and true or false
+	MenuHelper:AddToggle({
+		id = "BotCarryBags_shout_to_come_here_toggle_callback",
+		title = "BotCarryBags_menu_shout_to_come_here_title",
+		desc = "BotCarryBags_menu_shout_to_come_here_desc",
+		callback = "BotCarryBags_shout_to_come_here_toggle_callback",
+		value = _bool,
+		menu_id = BotCarryBags.options_menu,
+	})
 	local file = io.open("mods/Ask Bot to Carry the Bag/lua/Keybinds_Functions.lua", "w")
 	if file then
 		for k, v in pairs(BotCarryBags.LogicMenu or {}) do

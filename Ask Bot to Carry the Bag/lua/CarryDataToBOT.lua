@@ -37,7 +37,7 @@ function TeamAIBrain:Drop_Carray()
 end
 
 function path_change(them, to_pos)
-	if them:Get_Carray_Data() then
+	if them:Get_Carray_Data() and BotCarryBags.settings.shout_to_come_here == 1 then
 		to_pos = managers.player:player_unit():position()
 	end
 	if BotCarryBags.AI_Go_To_There then
