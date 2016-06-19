@@ -54,6 +54,13 @@ function BotCarryBags:Get_All_Bag_Unit()
 	return _unit
 end
 
+function BotCarryBags:Check_Bag_Can_Pickup(bag_unit)
+	if not bag_unit:carry_data()._steal_SO_data or not alive(bag_unit:carry_data()._steal_SO_data.thief) then
+		return true
+	end
+	return false
+end
+
 function BotCarryBags:Get_All_Bag_Unit_In_Sphere(pos, area)
 	local _unit_list = BotCarryBags.Bags_Unit_Key or {}
 	local _unit = {}

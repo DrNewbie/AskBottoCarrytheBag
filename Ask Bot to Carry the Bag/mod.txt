@@ -1,36 +1,15 @@
 {
 	"name" : "Ask Bot to Carry the Bag",
 	"author" : "Dr_Newbie",
-	"version" : "beta.5.7.2",
+	"version" : "beta.5.8",
 	"hooks" : [
-		{
-			"hook_id"	:	"lib/managers/playermanager",
-			"script_path"	:	"lua/PlayerThrowBagEvent.lua"
-		},
-		{
-			"hook_id"	:	"lib/units/player_team/teamaibrain",
-			"script_path"	:	"lua/CarryDataToBOT.lua"
-		},
-		{
-			"hook_id"	:	"lib/units/player_team/teamaibrain",
-			"script_path"	:	"lua/AutoPickupBag.lua"
-		},
-		{
-			"hook_id"	:	"lib/units/beings/player/states/playerstandard",
-			"script_path"	:	"lua/ShoutToPutDownCarry.lua"
-		},
-		{
-			"hook_id"	:	"lib/managers/group_ai_states/groupaistatebase",
-			"script_path"	:	"lua/HostArrestedSoBotDrop.lua"
-		},
-		{
-			"hook_id"	:	"lib/managers/localizationmanager",
-			"script_path"	:	"lua/MenuFunction.lua"
-		},
-		{
-			"hook_id"	:	"lib/managers/localizationmanager",
-			"script_path"	:	"lua/ToolFunction.lua"
-		}
+		{"hook_id" : "lib/managers/playermanager", "script_path" : "lua/PlayerThrowBagEvent.lua"},
+		{"hook_id" : "lib/units/player_team/teamaibrain", "script_path" : "lua/CarryDataToBOT.lua"},
+		{"hook_id" : "lib/units/player_team/teamaibrain", "script_path" : "lua/AutoPickupBag.lua"},
+		{"hook_id" : "lib/units/beings/player/states/playerstandard", "script_path" : "lua/ShoutToPutDownCarry.lua"},
+		{"hook_id" : "lib/managers/group_ai_states/groupaistatebase", "script_path" : "lua/HostArrestedSoBotDrop.lua"},
+		{"hook_id" : "lib/managers/localizationmanager", "script_path" : "lua/MenuFunction.lua"},
+		{"hook_id" : "lib/managers/localizationmanager", "script_path"	: "lua/ToolFunction.lua"}
 	],
 	"keybinds" : [
 		{
@@ -38,7 +17,7 @@
 			"name" : "Bot Carry MOD",
 			"description" : "",
 			"script_path" : "lua/AskBotMenu.lua",
-			"run_in_menu" : true,
+			"run_in_menu" : false,
 			"run_in_game" : true,
 			"localized" : false,
 		}
