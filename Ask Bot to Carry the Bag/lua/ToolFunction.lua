@@ -31,19 +31,34 @@ function BotCarryBags:Get_All_AI_Unit()
 	return _unit
 end
 
-function BotCarryBags:Get_All_Bag_Unit()
-	local _unit_list = {}
-	for _, name in pairs(CarryTweakData:get_carry_ids() or {}) do
-		if tweak_data.carry[name].unit then
-			local _key = Idstring(tweak_data.carry[name].unit):key()
-			if not _unit_list[_key] then
-				_unit_list[_key] = true
-			end
+BotCarryBags.Bags_Unit_Key = {}
+for _, name in pairs(CarryTweakData:get_carry_ids() or {}) do
+	if tweak_data.carry[name].unit then
+		local _key = Idstring(tweak_data.carry[name].unit):key()
+		if not BotCarryBags.Bags_Unit_Key[_key] then
+			BotCarryBags.Bags_Unit_Key[_key] = true
 		end
 	end
-	_unit_list[Idstring("units/payday2/pickups/gen_pku_lootbag/gen_pku_lootbag"):key()] = true
+end
+BotCarryBags.Bags_Unit_Key[Idstring("units/payday2/pickups/gen_pku_lootbag/gen_pku_lootbag"):key()] = true
+
+function BotCarryBags:Get_All_Bag_Unit()
+	local _unit_list = BotCarryBags.Bags_Unit_Key or {}
 	local _unit = {}
-	for _, data in pairs(World:find_units_quick("all") or {}) do
+	local _All_Unit = World:find_units_quick("all") or {}
+	for _, data in pairs(_All_Unit) do
+		if data and alive(data) and _unit_list[data:name():key()] then
+			table.insert(_unit, data)
+		end
+	end  
+	return _unit
+end
+
+function BotCarryBags:Get_All_Bag_Unit_In_Sphere(pos, area)
+	local _unit_list = BotCarryBags.Bags_Unit_Key or {}
+	local _unit = {}
+	local _Unit_In_Sphere = World:find_units("sphere", pos, area) or {}
+	for _, data in pairs(_Unit_In_Sphere) do
 		if data and alive(data) and _unit_list[data:name():key()] then
 			table.insert(_unit, data)
 		end

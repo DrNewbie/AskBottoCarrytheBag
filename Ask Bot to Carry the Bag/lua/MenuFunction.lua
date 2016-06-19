@@ -12,6 +12,7 @@ function BotCarryBags:Reset()
 	self.settings = {
 		shout_to_come_here = 1,
 		auto_pickup_bag = 0,
+		lua_keybinds = 1,
 	}
 	self:Save()
 end
@@ -46,6 +47,8 @@ Hooks:Add("LocalizationManagerPostInit", "BotCarryBags_loc", function(loc)
 		["BotCarryBags_menu_shout_to_come_here_desc"] = "Bot will go to your there when you shout to him and he has the bag.",
 		["BotCarryBags_menu_auto_pickup_bag_title"] = "Auto Pickup Bag",
 		["BotCarryBags_menu_auto_pickup_bag_desc"] = "Bot will pickup the bag if there is one around him.",
+		["BotCarryBags_menu_lua_keybinds_title"] = "Keybinds for Logic",
+		["BotCarryBags_menu_lua_keybinds_desc"] = "When this is ON, system will create keybinds to directly use logic.",
 	})
 end)
 
@@ -94,28 +97,47 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "BotCarryBagsOptions", function( men
 		value = _bool,
 		menu_id = BotCarryBags.options_menu,
 	})
-	local file = io.open("mods/Ask Bot to Carry the Bag/lua/Keybinds_Functions.lua", "w")
-	if file then
-		for k, v in pairs(BotCarryBags.LogicMenu or {}) do
-			local _id = "AskBotDo_Key_" .. k
-			local key = LuaModManager:GetPlayerKeybind(_id) or ("f" .. k)
-			MenuHelper:AddKeybinding({
-				id = _id,
-				title = v,
-				connection_name = _id,
-				button = key,
-				binding = key,
-				menu_id = BotCarryBags.options_menu,
-				localized = false,
-			})
-			local _callback_name = "BotCarryBags_Logic_Callback_" .. k
-			file:write("	MenuCallbackHandler.".. _callback_name .." = function() \n")
-			file:write("		dofile(\"".. BotCarryBags.LogicPath .. v .."\") \n")
-			file:write("	end \n")
-			file:write("	LuaModManager:AddKeybinding(\"".. _id .."\", callback(MenuCallbackHandler, MenuCallbackHandler, \"".. _callback_name .."\")) \n")
+	MenuCallbackHandler.BotCarryBags_lua_keybinds_toggle_callback = function(self, item)
+		if tostring(item:value()) == "on" then
+			BotCarryBags.settings.lua_keybinds = 1
+		else
+			BotCarryBags.settings.lua_keybinds = 0
 		end
-		file:close()
-		dofile("mods/Ask Bot to Carry the Bag/lua/Keybinds_Functions.lua")
+		BotCarryBags:Save()
+	end
+	_bool = BotCarryBags.settings.lua_keybinds == 1 and true or false
+	MenuHelper:AddToggle({
+		id = "BotCarryBags_lua_keybinds_toggle_callback",
+		title = "BotCarryBags_menu_lua_keybinds_title",
+		desc = "BotCarryBags_menu_lua_keybinds_desc",
+		callback = "BotCarryBags_lua_keybinds_toggle_callback",
+		value = _bool,
+		menu_id = BotCarryBags.options_menu,
+	})
+	if BotCarryBags.settings.lua_keybinds == 1 then
+		local file = io.open("mods/Ask Bot to Carry the Bag/lua/Keybinds_Functions.lua", "w")
+		if file then
+			for k, v in pairs(BotCarryBags.LogicMenu or {}) do
+				local _id = "AskBotDo_Key_" .. k
+				local key = LuaModManager:GetPlayerKeybind(_id) or ("f" .. k)
+				MenuHelper:AddKeybinding({
+					id = _id,
+					title = v,
+					connection_name = _id,
+					button = key,
+					binding = key,
+					menu_id = BotCarryBags.options_menu,
+					localized = false,
+				})
+				local _callback_name = "BotCarryBags_Logic_Callback_" .. k
+				file:write("	MenuCallbackHandler.".. _callback_name .." = function() \n")
+				file:write("		dofile(\"".. BotCarryBags.LogicPath .. v .."\") \n")
+				file:write("	end \n")
+				file:write("	LuaModManager:AddKeybinding(\"".. _id .."\", callback(MenuCallbackHandler, MenuCallbackHandler, \"".. _callback_name .."\")) \n")
+			end
+			file:close()
+			dofile("mods/Ask Bot to Carry the Bag/lua/Keybinds_Functions.lua")
+		end
 	end
 end)
 Hooks:Add("MenuManagerBuildCustomMenus", "BotCarryBagsOptions", function(menu_manager, nodes)
