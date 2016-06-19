@@ -11,7 +11,7 @@ BotCarryBags.LogicMenu = {}
 function BotCarryBags:Reset()
 	self.settings = {
 		shout_to_come_here = 1,
-		auto_pickup_bag = 1,
+		auto_pickup_bag = 0,
 	}
 	self:Save()
 end
