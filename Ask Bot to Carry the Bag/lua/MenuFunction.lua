@@ -11,6 +11,7 @@ BotCarryBags.LogicMenu = {}
 function BotCarryBags:Reset()
 	self.settings = {
 		shout_to_come_here = 1,
+		auto_pickup_bag = 1,
 	}
 	self:Save()
 end
@@ -43,6 +44,8 @@ Hooks:Add("LocalizationManagerPostInit", "BotCarryBags_loc", function(loc)
 		["BotCarryBags_menu_desc"] = "",
 		["BotCarryBags_menu_shout_to_come_here_title"] = "Shout to Come Here",
 		["BotCarryBags_menu_shout_to_come_here_desc"] = "Bot will go to your there when you shout to him and he has the bag.",
+		["BotCarryBags_menu_auto_pickup_bag_title"] = "Auto Pickup Bag",
+		["BotCarryBags_menu_auto_pickup_bag_desc"] = "Bot will pickup the bag if there is one around him.",
 	})
 end)
 
@@ -71,6 +74,23 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "BotCarryBagsOptions", function( men
 		title = "BotCarryBags_menu_shout_to_come_here_title",
 		desc = "BotCarryBags_menu_shout_to_come_here_desc",
 		callback = "BotCarryBags_shout_to_come_here_toggle_callback",
+		value = _bool,
+		menu_id = BotCarryBags.options_menu,
+	})
+	MenuCallbackHandler.BotCarryBags_auto_pickup_bag_toggle_callback = function(self, item)
+		if tostring(item:value()) == "on" then
+			BotCarryBags.settings.auto_pickup_bag = 1
+		else
+			BotCarryBags.settings.auto_pickup_bag = 0
+		end
+		BotCarryBags:Save()
+	end
+	_bool = BotCarryBags.settings.auto_pickup_bag == 1 and true or false
+	MenuHelper:AddToggle({
+		id = "BotCarryBags_auto_pickup_bag_toggle_callback",
+		title = "BotCarryBags_menu_auto_pickup_bag_title",
+		desc = "BotCarryBags_menu_auto_pickup_bag_desc",
+		callback = "BotCarryBags_auto_pickup_bag_toggle_callback",
 		value = _bool,
 		menu_id = BotCarryBags.options_menu,
 	})

@@ -23,6 +23,7 @@ function TeamAIBrain:Set_Carray_Data(carry_unit)
 	end
 	self._carry_unit = carry_unit or nil
 	carry_unit:carry_data():link_to(self._unit)
+	carry_unit:carry_data()._steal_SO_data = {thief = self._unit}
 end
 
 function TeamAIBrain:Get_Carray_Data()
@@ -32,6 +33,7 @@ end
 function TeamAIBrain:Drop_Carray()
 	if self._carry_unit and alive(self._carry_unit) then
 		self._carry_unit:carry_data():unlink()
+		self._carry_unit:carry_data()._steal_SO_data = {thief = nil}
 	end
 	self._carry_unit = nil
 end
