@@ -10,8 +10,14 @@ end
 
 local _f_TeamAIBrain_update = TeamAIBrain.update
 
+local _run_delay = false
+
 function TeamAIBrain:update(...)
 	_f_TeamAIBrain_update(self, ...)
+	if _run_delay then
+		return
+	end
+	_run_delay = true
 	if BotCarryBags.settings.auto_pickup_bag == 1 and not self:Get_Carray_Data() then
 		local _Bags = BotCarryBags:Get_All_Bag_Unit_In_Sphere(self._unit:position(), 200)
 		if _Bags and #_Bags >= 1 then
@@ -25,4 +31,7 @@ function TeamAIBrain:update(...)
 			end
 		end
 	end
+	DelayedCalls:Add("DelayedMod_TeamAIBrain_update_" .. tostring(_ai_unit:key()), 0.5, function()
+		_run_delay = false
+	end)
 end
