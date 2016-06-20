@@ -17,7 +17,7 @@ function BotCarryBags:Reset()
 	self.settings = {
 		shout_to_come_here = 1,
 		shout_to_drop = 1,
-		auto_pickup_bag = 1,
+		auto_pickup_bag = 0,
 		lua_keybinds = 1,
 	}
 	self:Save()
