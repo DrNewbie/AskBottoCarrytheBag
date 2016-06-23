@@ -40,7 +40,9 @@ end
 
 function path_change(them, to_pos)
 	if them:Get_Carray_Data() and BotCarryBags.settings.shout_to_come_here == 1 then
-		to_pos = managers.player:player_unit():position()
+		if managers.player and managers.player:player_unit() then
+			to_pos = managers.player:player_unit():position()
+		end
 	end
 	if BotCarryBags.AI_Go_To_There then
 		local _id = them._unit:name():key()
