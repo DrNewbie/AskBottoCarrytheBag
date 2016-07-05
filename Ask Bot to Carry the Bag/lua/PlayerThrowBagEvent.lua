@@ -23,7 +23,7 @@ function Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
 	if crosshair_unit and crosshair_unit:brain() then
 		crosshair_unit:brain():Drop_Carray()
 		DelayedCalls:Add("DelayedModDeleteUnit" .. carry_id, 0.5, function()
-			if carry_unit then
+			if carry_unit and crosshair_unit:brain() then
 				crosshair_unit:brain():Set_Carray_Data(carry_unit)
 			end
 		end)
