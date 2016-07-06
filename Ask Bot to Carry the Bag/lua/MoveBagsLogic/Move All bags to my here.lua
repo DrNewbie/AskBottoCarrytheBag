@@ -42,10 +42,12 @@ function Running()
 						else
 							for _, _bag_unit in pairs(_Bags) do
 								if _bag_unit and alive(_bag_unit) and BotCarryBags:Check_Bag_Can_Pickup(_bag_unit) then
-									if mvector3.distance(_ai_unit:position(), _bag_unit:position()) <= 100 then
-										_ai_unit:brain():Set_Carray_Data(_bag_unit)
-									else
-										BotCarryBags:Ask_AI_Go_To_There(_ai_unit, _bag_unit:position())
+									if mvector3.distance(_ai_unit:position(), _My_Pos) > 200 then
+										if mvector3.distance(_ai_unit:position(), _bag_unit:position()) <= 100 then
+											_ai_unit:brain():Set_Carray_Data(_bag_unit)
+										else
+											BotCarryBags:Ask_AI_Go_To_There(_ai_unit, _bag_unit:position())
+										end
 									end
 									_Run = _Run + 1
 								end
