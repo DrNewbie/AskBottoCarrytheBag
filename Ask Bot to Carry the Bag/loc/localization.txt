@@ -8,5 +8,7 @@
 	"BotCarryBags_menu_lua_keybinds_title" : "Keybinds for Logic",
 	"BotCarryBags_menu_lua_keybinds_desc" : "When this is ON, system will create keybinds to directly use logic.",
 	"BotCarryBags_menu_shout_to_drop_title" : "Shout to Drop",
-	"BotCarryBags_menu_shout_to_drop_desc" : "Bot will drop the bag when you shout to him"
+	"BotCarryBags_menu_shout_to_drop_desc" : "Bot will drop the bag when you shout to him",
+	"BotCarryBags_menu_warning4reboot" : "You need to reboot the game to apply this changing",
+	"BotCarryBags_menu_use4ok" : "[OK]"
 }

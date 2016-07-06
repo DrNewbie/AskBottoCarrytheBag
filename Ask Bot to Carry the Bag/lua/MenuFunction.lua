@@ -43,21 +43,21 @@ function BotCarryBags:Save()
 	end
 end
 
-function BotCarryBags:Warning()
-	local _dialog_data = {
-		title = "Bot Carry MOD",
-		text = "You need to reboot the game to apply this changing",
-		button_list = {{ text = "[OK]", is_cancel_button = true }},
-		id = tostring(math.random(0,0xFFFFFFFF))
-	}
-	managers.system_menu:show(_dialog_data)
-end
-
 BotCarryBags:Load()
 
 Hooks:Add("LocalizationManagerPostInit", "BotCarryBags_loc", function(loc)
 	LocalizationManager:load_localization_file("mods/Ask Bot to Carry the Bag/loc/localization.txt")
 end)
+
+function BotCarryBags:Warning()
+	local _dialog_data = {
+		title = "Bot Carry MOD",
+		text = managers.localization:text("BotCarryBags_menu_warning4reboot"),
+		button_list = {{ text = managers.localization:text("BotCarryBags_menu_use4ok"), is_cancel_button = true }},
+		id = tostring(math.random(0,0xFFFFFFFF))
+	}
+	managers.system_menu:show(_dialog_data)
+end
 
 if file.GetFiles(BotCarryBags.LogicPath) then
 	for _, path in pairs(file.GetFiles(BotCarryBags.LogicPath)) do
@@ -169,5 +169,5 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "BotCarryBagsOptions", function( men
 end)
 Hooks:Add("MenuManagerBuildCustomMenus", "BotCarryBagsOptions", function(menu_manager, nodes)
 	nodes[BotCarryBags.options_menu] = MenuHelper:BuildMenu( BotCarryBags.options_menu )
-	MenuHelper:AddMenuItem( MenuHelper.menus.lua_mod_options_menu, BotCarryBags.options_menu, "BotCarryBags_menu_title", "BotCarryBags_menu_desc", 1 )
+	MenuHelper:AddMenuItem( MenuHelper.menus.lua_mod_options_menu, BotCarryBags.options_menu, "BotCarryBags_menu_title", "BotCarryBags_menu_desc")
 end)
