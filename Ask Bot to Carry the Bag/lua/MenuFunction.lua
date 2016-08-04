@@ -1,5 +1,9 @@
 _G.BotCarryBags = _G.BotCarryBags or {}
 
+if Network:is_client() then
+	return
+end
+
 BotCarryBags.options_menu = "BotCarryBags_menu"
 BotCarryBags.ModPath = ModPath
 BotCarryBags.SaveFile = BotCarryBags.SaveFile or SavePath .. "BotCarryBags.txt"

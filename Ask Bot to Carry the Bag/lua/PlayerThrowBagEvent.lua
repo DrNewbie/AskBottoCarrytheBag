@@ -7,9 +7,10 @@ local _f_PlayerManager_server_drop_carry = PlayerManager.server_drop_carry
 function PlayerManager:server_drop_carry(carry_id, ...)
 	local _crosshair_unit,  _crosshair_distance = Get_Crosshair_Unit()
 	local _carry_unit = _f_PlayerManager_server_drop_carry(self, carry_id, ...)
+	local _all_AI_criminals = managers.groupai:state():all_AI_criminals() or {}
 	if _crosshair_unit and alive(_crosshair_unit) and _crosshair_distance <= 500 and
 		mvector3.distance(managers.player:player_unit():position(), _crosshair_unit:position()) <= 500 then
-		for _, data in pairs(managers.groupai:state():all_AI_criminals() or {}) do
+		for _, data in pairs(_all_AI_criminals) do
 			if data.unit and alive(data.unit) and data.unit == _crosshair_unit then
 				_carry_unit = Try_Send_Carry_To_There(_crosshair_unit, _carry_unit, carry_id)
 				break
@@ -41,9 +42,9 @@ function Get_Crosshair_Unit()
 	mvector3.set(mvec_to, camera:forward())
 	mvector3.multiply(mvec_to, 20000)
 	mvector3.add(mvec_to, from_pos)
-	local col_ray = World:raycast("ray", from_pos, mvec_to, "slot_mask", managers.slot:get_mask("bullet_impact_targets"))
-	if col_ray and col_ray.unit then
-		return col_ray.unit, col_ray.distance
+	local _col_ray = World:raycast("ray", from_pos, mvec_to, "slot_mask", managers.slot:get_mask("criminals"))
+	if _col_ray and _col_ray.unit then
+		return _col_ray.unit, _col_ray.distance
 	end
 	return nil, 0
 end

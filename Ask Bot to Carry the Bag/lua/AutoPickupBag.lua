@@ -1,5 +1,9 @@
 _G.BotCarryBags = _G.BotCarryBags or {}
 
+if Network:is_client() then
+	return
+end
+
 if not BotCarryBags then
 	return
 end
