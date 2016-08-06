@@ -12,9 +12,9 @@ if BotCarryBags.settings.auto_pickup_bag ~= 1 then
 	return
 end
 
-local _f_TeamAIMovement_update = CopMovement.init
+local _f_TeamAIMovement_update = TeamAIMovement.init
 
-function CopMovement:init(...)
+function TeamAIMovement:init(...)
 	_f_TeamAIMovement_update(self, ...)
 	self._auto_pickup_bag_t = 0
 end
