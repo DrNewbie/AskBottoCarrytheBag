@@ -12,6 +12,7 @@ BotCarryBags.settings = {
 	shout_to_come_here = 1,
 	shout_to_drop = 1,
 	auto_pickup_bag = 0,
+	auto_follow_player = 1,
 	lua_keybinds = 1,
 }
 BotCarryBags.LogicPath = "mods/Ask Bot to Carry the Bag/lua/MoveBagsLogic/"
@@ -22,6 +23,7 @@ function BotCarryBags:Reset()
 		shout_to_come_here = 1,
 		shout_to_drop = 1,
 		auto_pickup_bag = 0,
+		auto_follow_player = 1,
 		lua_keybinds = 1,
 	}
 	self:Save()
@@ -88,6 +90,24 @@ Hooks:Add("MenuManagerPopulateCustomMenus", "BotCarryBagsOptions", function( men
 		title = "BotCarryBags_menu_shout_to_come_here_title",
 		desc = "BotCarryBags_menu_shout_to_come_here_desc",
 		callback = "BotCarryBags_shout_to_come_here_toggle_callback",
+		value = _bool,
+		menu_id = BotCarryBags.options_menu,
+	})
+	MenuCallbackHandler.BotCarryBags_auto_follow_player_toggle_callback = function(self, item)
+		if tostring(item:value()) == "on" then
+			BotCarryBags.settings.auto_follow_player = 1
+		else
+			BotCarryBags.settings.auto_follow_player = 0
+		end
+		BotCarryBags:Save()
+		BotCarryBags:Warning()
+	end
+	_bool = BotCarryBags.settings.auto_follow_player == 1 and true or false
+	MenuHelper:AddToggle({
+		id = "BotCarryBags_auto_follow_player_toggle_callback",
+		title = "BotCarryBags_menu_auto_follow_player_title",
+		desc = "BotCarryBags_menu_auto_follow_player_desc",
+		callback = "BotCarryBags_auto_follow_player_toggle_callback",
 		value = _bool,
 		menu_id = BotCarryBags.options_menu,
 	})
