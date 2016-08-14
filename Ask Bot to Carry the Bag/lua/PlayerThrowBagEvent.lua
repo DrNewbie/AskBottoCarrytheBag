@@ -2,6 +2,12 @@ if Network:is_client() then
 	return
 end
 
+_G.BotCarryBags = _G.BotCarryBags or {}
+
+if not BotCarryBags then
+	return
+end
+
 local _f_PlayerManager_server_drop_carry = PlayerManager.server_drop_carry
 
 function PlayerManager:server_drop_carry(carry_id, ...)
@@ -12,7 +18,7 @@ function PlayerManager:server_drop_carry(carry_id, ...)
 		mvector3.distance(managers.player:player_unit():position(), _crosshair_unit:position()) <= 500 then
 		for _, data in pairs(_all_AI_criminals) do
 			if data.unit and alive(data.unit) and data.unit == _crosshair_unit then
-				_carry_unit = Try_Send_Carry_To_There(_crosshair_unit, _carry_unit, carry_id)
+				_carry_unit = BotCarryBags:Try_Send_Carry_To_There(_crosshair_unit, _carry_unit, carry_id)
 				break
 			end
 		end
@@ -20,7 +26,7 @@ function PlayerManager:server_drop_carry(carry_id, ...)
 	return _carry_unit
 end
 
-function Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
+function BotCarryBags:Try_Send_Carry_To_There(crosshair_unit, carry_unit, carry_id)
 	if crosshair_unit and crosshair_unit:brain() then
 		crosshair_unit:brain():Drop_Carray()
 		DelayedCalls:Add("DelayedModDeleteUnit" .. carry_id, 0.5, function()
