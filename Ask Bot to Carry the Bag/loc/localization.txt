@@ -12,7 +12,7 @@
 	"BotCarryBags_menu_shout_to_drop_title" : "Shout to Drop",
 	"BotCarryBags_menu_shout_to_drop_desc" : "Bot will drop the bag when you shout to him",
 	"BotCarryBags_menu_fix_outside_bag_title" : "Fix Unreachable Bag",
-	"BotCarryBags_menu_fix_outside_bag_desc" : "Forced the bag to stick on Bot when it is out of map.",
+	"BotCarryBags_menu_fix_outside_bag_desc" : "Forced the bag to stick on Bot when it fall through the ground.",
 	"BotCarryBags_menu_warning4reboot" : "You need to reboot the game to apply this changing",
 	"BotCarryBags_menu_use4ok" : "[OK]"
 }

@@ -28,7 +28,7 @@ function CarryData:update(unit, t, dt)
 				local _all_AI_criminals = managers.groupai:state():all_AI_criminals() or {}
 				for _, data in pairs(_all_AI_criminals) do
 					if data.unit and alive(data.unit) and data.unit ~= managers.player:player_unit() then
-						_carry_unit = BotCarryBags:Try_Send_Carry_To_There(data.unit, self._unit, _s_z)
+						BotCarryBags:Try_Send_Carry_To_There(data.unit, self._unit, _s_z)
 						break
 					end
 				end
