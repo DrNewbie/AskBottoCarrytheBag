@@ -61,19 +61,6 @@ function PrivateUpdater:Accept2Update(data)
 	PrivateUpdater:DoUpdate(data.download_url, data.to_folder_name, data.from_folder_name)
 end
 
-function PrivateUpdater:Update_Stats()
-	local _dialog_data = {
-		title = "[Private Updater]",
-		text = " ~".. PrivateUpdater.Update_Percent .."%",
-		button_list = {
-			{ text = "[Refresh]", callback_func = callback(self, self, "Update_Stats", {}) },
-			{ text = "[No]", is_cancel_button = true }
-		},
-		id = tostring(math.random(0,0xFFFFFFFF))
-	}
-	managers.system_menu:show(_dialog_data)
-end
-
 function PrivateUpdater:AlwaysNo()
 	if BotCarryBags then
 		BotCarryBags.settings.auto_update = 0
@@ -119,7 +106,7 @@ function PrivateUpdater:MoveFile(mods_folder, to_folder_name, from_folder_name)
 			title = "[Private Updater]",
 			text = "Successful!!",
 			button_list = {
-				{ text = "[No]", is_cancel_button = true }
+				{ text = "[Close]", is_cancel_button = true }
 			},
 			id = tostring(math.random(0,0xFFFFFFFF))
 		}
