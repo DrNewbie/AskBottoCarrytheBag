@@ -14,7 +14,7 @@ BotCarryBags.settings = {
 	auto_pickup_bag = 0,
 	auto_follow_player = 0,
 	lua_keybinds = 0,
-	fix_outside_bag = 0,
+	fix_outside_bag = 1,
 }
 BotCarryBags.LogicPath = "mods/Ask Bot to Carry the Bag/lua/MoveBagsLogic/"
 BotCarryBags.LogicMenu = {}
@@ -26,7 +26,7 @@ function BotCarryBags:Reset()
 		auto_pickup_bag = 0,
 		auto_follow_player = 0,
 		lua_keybinds = 0,
-		fix_outside_bag = 0,
+		fix_outside_bag = 1,
 	}
 	self:Save()
 end

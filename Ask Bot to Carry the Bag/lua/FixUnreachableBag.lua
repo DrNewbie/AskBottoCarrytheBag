@@ -21,10 +21,16 @@ function CarryData:update(unit, t, dt)
 		_unit_list[self._unit:name():key()] and BotCarryBags:Check_Bag_Can_Pickup(self._unit) then
 		if managers.player:player_unit() and alive(managers.player:player_unit()) then
 			local _p_z = managers.player:player_unit():position().z or 0
+			local all_criminals = managers.groupai:state():all_char_criminals() or {}
+			for u_key, u_data in pairs(all_criminals) do
+				if u_data.unit and alive(u_data.unit) then
+					_p_z = math.min(_p_z, u_data.unit:position().z)
+				end
+			end
 			local _b_z = self._unit:position().z or 0
 			local _s_z = _p_z - _b_z
 			_s_z = math.abs(math.floor(_s_z))
-			if _s_z > 2500 then
+			if _s_z > 2000 then
 				local _all_AI_criminals = managers.groupai:state():all_AI_criminals() or {}
 				for _, data in pairs(_all_AI_criminals) do
 					if data.unit and alive(data.unit) and data.unit ~= managers.player:player_unit() then
