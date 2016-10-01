@@ -24,7 +24,7 @@ function CarryData:update(unit, t, dt)
 			local _b_z = self._unit:position().z or 0
 			local _s_z = _p_z - _b_z
 			_s_z = math.abs(math.floor(_s_z))
-			if _s_z > 2900 then
+			if _s_z > 2500 then
 				local _all_AI_criminals = managers.groupai:state():all_AI_criminals() or {}
 				for _, data in pairs(_all_AI_criminals) do
 					if data.unit and alive(data.unit) and data.unit ~= managers.player:player_unit() then
