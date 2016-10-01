@@ -37,6 +37,7 @@ function TeamAIBrain:Drop_Carray()
 	if self._carry_unit and alive(self._carry_unit) then
 		self._carry_unit:carry_data():unlink()
 		self._carry_unit:carry_data()._steal_SO_data = {thief = nil}
+		self._carry_unit:push(100, Vector3(0, 0, 600))
 	end
 	self._carry_unit = nil
 end
