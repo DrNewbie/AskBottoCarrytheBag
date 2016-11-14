@@ -47,10 +47,11 @@ function BotCarryBags:Ask_AI_Go_To_There(unit, pos)
 			},
 			align_sync = true
 		},
-		action_duration = tweak_data.interaction.revive.timer,
+		action_duration = 0.5,
 		followup_objective = followup_objective
 	}
 	if not unit:movement():Is_Bot_Carry_Target_Pos() then
+		unit:brain():set_objective()
 		unit:movement():set_should_stay(false)
 		unit:movement():Set_Bot_Carry_Target_Pos(pos)
 		unit:brain():set_objective(objective)
