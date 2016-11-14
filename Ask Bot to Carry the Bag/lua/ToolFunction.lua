@@ -5,13 +5,62 @@ if Network:is_client() then
 end
 
 function BotCarryBags:Ask_AI_Go_To_There(unit, pos)
-	if not self.AI_Go_To_There then
-		self.AI_Go_To_There = {}
-	end
-	self.AI_Go_To_There[unit:name():key()] = {
-		pos = pos
+	local revive_SO_data = {
+		unit = unit
 	}
-	unit:brain():on_long_dis_interacted(5, managers.player:player_unit())
+	local followup_objective = {
+		type = "act",
+		scan = true,
+		action = {
+			type = "act",
+			body_part = 1,
+			variant = "crouch",
+			blocks = {
+				action = -1,
+				walk = -1,
+				hurt = -1,
+				heavy_hurt = -1,
+				aim = -1
+			}
+		}
+	}
+	local objective = {
+		type = "act",
+		haste = "run",
+		destroy_clbk_key = false,
+		nav_seg = unit:movement():nav_tracker():nav_segment(),
+		pos = pos,
+		fail_clbk = callback(BotCarryBags, BotCarryBags, "on_go_to_there", revive_SO_data),
+		complete_clbk = callback(BotCarryBags, BotCarryBags, "on_go_to_there", revive_SO_data),
+		action_start_clbk = callback(BotCarryBags, BotCarryBags, "on_go_to_there", revive_SO_data),
+		action = {
+			type = "act",
+			variant = "revive",
+			body_part = 1,
+			blocks = {
+				action = -1,
+				walk = -1,
+				light_hurt = -1,
+				hurt = -1,
+				heavy_hurt = -1,
+				aim = -1
+			},
+			align_sync = true
+		},
+		action_duration = tweak_data.interaction.revive.timer,
+		followup_objective = followup_objective
+	}
+	if not unit:movement():Is_Bot_Carry_Target_Pos() then
+		unit:movement():set_should_stay(false)
+		unit:movement():Set_Bot_Carry_Target_Pos(pos)
+		unit:brain():set_objective(objective)
+	end
+end
+
+function BotCarryBags:on_go_to_there(revive_SO_data)
+	if revive_SO_data and alive(revive_SO_data.unit) then
+		revive_SO_data.unit:brain():set_objective()
+	end
 end
 
 function BotCarryBags:Is_Ask_AI_Go_To_There(unit)
@@ -49,7 +98,7 @@ BotCarryBags.Bags_Unit_Key[Idstring("units/payday2/pickups/gen_pku_lootbag/gen_p
 function BotCarryBags:Get_All_Bag_Unit()
 	local _unit_list = self.Bags_Unit_Key or {}
 	local _unit = {}
-	local _All_Unit = World:find_units_quick("all") or {}
+	local _All_Unit = World:find_units_quick("all", World:make_slot_mask(14)) or {}
 	for _, data in pairs(_All_Unit) do
 		if data and alive(data) and _unit_list[data:name():key()] then
 			table.insert(_unit, data)
@@ -102,12 +151,12 @@ end
 function BotCarryBags:Get_All_Bag_Unit_In_Sphere(pos, area)
 	local _unit_list = self.Bags_Unit_Key or {}
 	local _unit = {}
-	local _Unit_In_Sphere = World:find_units("sphere", pos, area) or {}
+	local _Unit_In_Sphere = World:find_units("sphere", pos, area, World:make_slot_mask(14)) or {}
 	for _, data in pairs(_Unit_In_Sphere) do
 		if data and alive(data) and _unit_list[data:name():key()] then
 			table.insert(_unit, data)
 		end
-	end  
+	end
 	return _unit
 end
 

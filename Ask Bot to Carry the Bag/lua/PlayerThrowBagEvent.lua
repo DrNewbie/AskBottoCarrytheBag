@@ -14,7 +14,7 @@ function PlayerManager:server_drop_carry(carry_id, ...)
 	local _crosshair_unit,  _crosshair_distance = Get_Crosshair_Unit()
 	local _carry_unit = _BotCarryBags_PlayerManager_server_drop_carry(self, carry_id, ...)
 	if _carry_unit and alive(_carry_unit) and _carry_unit:key() then
-		BotCarryBags.Zipline_Protect_List_tmp[_carry_unit:key()] = TimerManager:game():time() + 30
+		BotCarryBags.Zipline_Protect_List_tmp[_carry_unit:key()] = TimerManager:game():time() + 10
 		local _all_AI_criminals = managers.groupai:state():all_AI_criminals() or {}
 		if _crosshair_unit and alive(_crosshair_unit) and _crosshair_distance <= 500 and
 			mvector3.distance(managers.player:player_unit():position(), _crosshair_unit:position()) <= 500 then
