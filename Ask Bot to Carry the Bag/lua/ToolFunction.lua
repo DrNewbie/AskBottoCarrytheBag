@@ -35,12 +35,11 @@ function BotCarryBags:Ask_AI_Go_To_There(unit, pos)
 		action_start_clbk = callback(BotCarryBags, BotCarryBags, "on_go_to_there", revive_SO_data),
 		action = {
 			type = "act",
-			variant = "revive",
 			body_part = 1,
+			variant = "crouch",
 			blocks = {
 				action = -1,
 				walk = -1,
-				light_hurt = -1,
 				hurt = -1,
 				heavy_hurt = -1,
 				aim = -1

@@ -32,7 +32,7 @@ function Running()
 				if _ai_unit and alive(_ai_unit) then
 					if not BotCarryBags:Is_Ask_AI_Go_To_There(_ai_unit) then
 						if _ai_unit:brain():Get_Carray_Data() then
-							if mvector3.distance(_ai_unit:position(), _My_Pos) <= 500 then							
+							if mvector3.distance(_ai_unit:position(), _My_Pos) <= 500 then
 								DelayedCalls:Add("DelayedModMoveBagsLoop_Drop_" .. tostring(_ai_unit:key()), 0.2, function()
 									_ai_unit:brain():Drop_Carray()
 								end)

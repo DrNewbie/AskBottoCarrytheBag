@@ -1,7 +1,7 @@
 {
 	"name":"Ask Bot to Carry the Bag",
 	"author":"Dr_Newbie",
-	"version":"8.1",
+	"version":"8.2",
 	"hooks" : [
 		{"hook_id":"lib/managers/playermanager", "script_path":"lua/PlayerThrowBagEvent.lua"},
 		{"hook_id":"lib/units/player_team/teamaibrain", "script_path":"lua/CarryDataToBOT.lua"},
